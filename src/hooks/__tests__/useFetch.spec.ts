@@ -280,6 +280,21 @@ describe('useFetch', () => {
         expect(fetchMock).toHaveBeenCalledWith(url + 2, { signal: expect.any(AbortSignal) })
     })
 
+    test('should rerender when url changes', async () => {
+        const url1 = 'https://jsonplaceholder.typicode.com/posts/1'
+        const url2 = 'https://jsonplaceholder.typicode.com/posts/2'
+
+        const { rerender } = renderHook(hookUrl => useFetch(hookUrl), {
+            initialProps: url1,
+        })
+
+        rerender(url2)
+
+        expect(fetchMock).toHaveBeenCalledTimes(2)
+        expect(fetchMock).toHaveBeenCalledWith(url1, { signal: expect.any(AbortSignal) })
+        expect(fetchMock).toHaveBeenCalledWith(url2, { signal: expect.any(AbortSignal) })
+    })
+
     test('should rerender when options change', async () => {
         const url = 'https://jsonplaceholder.typicode.com/'
 
