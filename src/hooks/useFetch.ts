@@ -1,3 +1,5 @@
+// This hook does not deal with caching or deduping
+// I would seriously consider using TanStack Query instead of this hook
 import { useCallback, useEffect, useRef, useState } from 'react'
 
 type UseFetchResponse<T> = {
